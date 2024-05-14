@@ -10,3 +10,6 @@
 #### where base_price>500 and promo_type='BOGOF'
 #### GROUP BY product_code
 #### order by product_code asc;
+![Screenshot 2024-05-14 095320](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/2ce17ddb-e02c-401c-980a-f2447c1508e7)
+# 
+### 2.
