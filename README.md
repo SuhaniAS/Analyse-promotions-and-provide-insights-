@@ -12,4 +12,12 @@
 #### order by product_code asc;
 ![Screenshot 2024-05-14 095320](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/2ce17ddb-e02c-401c-980a-f2447c1508e7)
 # 
-### 2.
+### 2. Generate a report that provides an overview of the number of stores in each city. The results will be stored in descending order of store counts, allowing us to identify the cities with the highest store presence. The report includes two essential fields: city and store count, which will assist in optimizing our retail operations.
+#### Code:
+#### select city, count(store_id)
+#### from dim_stores
+#### group by city
+#### order by count(store_id) desc; 
+![Screenshot 2024-05-14 102209](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/17f45582-f5ba-41a7-8e08-005e056bff70)
+#
+### 3. 
