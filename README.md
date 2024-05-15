@@ -35,4 +35,4 @@
 #### group by campaign_id;
 ![Screenshot 2024-05-15 122217](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/e7804c22-060b-49cd-aaaf-eb5f18cd2494)
 #
-### 4.
+### 4. Produce a report that calculates the Incremental Sold Quantity(ISU%) for each category during the Diwali
