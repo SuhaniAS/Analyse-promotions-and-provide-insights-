@@ -34,5 +34,6 @@
 #### )/1000000 as `total_revenue_after_promotion(m)` from retail_events_db.fact_events join dim_campaigns 
 #### using (campaign_id)
 #### group by campaign_id;
+![Screenshot 2024-05-15 122217](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/e7804c22-060b-49cd-aaaf-eb5f18cd2494)
 #
 ### 4.
