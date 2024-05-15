@@ -18,8 +18,7 @@
 #### from dim_stores
 #### group by city
 #### order by count(store_id) desc; 
-![Screenshot 2024-05-14 102209](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/17f45582-f5ba-41a7-8e08-005e056bff70)    gh
-#
+![Screenshot 2024-05-14 102209](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/17f45582-f5ba-41a7-8e08-005e056bff70)   
 ### 3. Generate a report that displays each campaign along with the total revenue generated before and after the campaign? (Display the values in millions)
 #### Code:
 #### select campaign_id,campaign_name, sum(base_price*`quantity_sold(before_promo)`)/1000000 as `total_revenue_before_promotion(m)`,
