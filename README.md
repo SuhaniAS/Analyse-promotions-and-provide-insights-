@@ -35,4 +35,32 @@
 #### group by campaign_id;
 ![Screenshot 2024-05-15 122217](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/e7804c22-060b-49cd-aaaf-eb5f18cd2494)
 #
-### 4. Produce a report that calculates the Incremental Sold Quantity(ISU%) for each category during the Diwali
+### 4. Produce a report that calculates the Incremental Sold Quantity(ISU%) for each category during the Diwali campaign. Additionally, provide rankings for the categories based on their ISU%. This information will assist in  assessing the category-wise success and impact of the Diwali  campaign on  incremental sales.
+####  Code:
+
+#### create table new_table
+####  select campaign_id,product_code, sum(base_price*`quantity_sold(before_promo)`) as `total_revenue(before_promo)`, 
+#### sum(
+#### case
+#### when promo_type='25% OFF' then base_price*(1-0.25)*`quantity_sold(after_promo)`
+#### when promo_type='33% OFF' then base_price*(1-0.33)*`quantity_sold(after_promo)`
+#### when promo_type='50% OFF' then base_price*(1-0.5)*`quantity_sold(after_promo)`
+#### when promo_type='BOGOF' then base_price*`quantity_sold(after_promo)`
+#### when promo_type='500 Cashback' then (base_price-500)*`quantity_sold(after_promo)`
+#### end) as `total_revenue(after_promo)`
+#### from fact_events
+#### where campaign_id='CAMP_DIW_01'
+#### group by fact_events.product_code
+#### ;
+
+#### create table isu_table
+####  select campaign_id,product_code,
+#### ((`total_revenue(after_promo)`-`total_revenue(before_promo)`)/`total_revenue(after_promo)`)*100 as isu
+#### from new_table;
+
+
+####  select campaign_id,product_code,isu, dense_rank()
+####  over (order by isu desc) as result from isu_table;
+![Screenshot 2024-05-16 210537](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/1dbc2398-f496-4cfc-96fa-0df413517899)
+#
+### 5. 
