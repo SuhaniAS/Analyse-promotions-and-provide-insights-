@@ -78,12 +78,15 @@
 #### end
 #### ) as ir_after_promo
 #### from retail_events_db.fact_events
-#### inner join dim_products 
-#### where fact_events.product_code=dim_products.product_code
+#### join dim_products using (product_code)
 #### group by product_code;
 
-#### select*from ir;
+#### select*from `ir%`;
 
-#### select product_name, category, (ir_after_promo-ir_before_promo)*100/ir_after_promo as `ir%`
+#### create table `ir%`
+#### select product_name, category, (ir_after_promo-ir_before_promo)*100/ir_before_promo as `ir%`
 #### from ir;
-![Screenshot 2024-05-17 110048](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/7144fe41-2553-4faf-af7a-60e6ac8f924d)
+
+#### select product_name, category,`ir%`, rank() over(order by `ir%` desc) as `rank_ir%`
+#### from `ir%`;
+![Screenshot 2024-05-17 202018](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/92c415f2-dfb3-4e4a-98b1-48f2ffdf8a8e)
