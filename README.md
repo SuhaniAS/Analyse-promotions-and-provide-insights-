@@ -38,30 +38,19 @@
 ### 4. Produce a report that calculates the Incremental Sold Quantity(ISU%) for each category during the Diwali campaign. Additionally, provide rankings for the categories based on their ISU%. This information will assist in  assessing the category-wise success and impact of the Diwali  campaign on  incremental sales.
 ####  Code:
 
-#### create table new_table
-####  select campaign_id,product_code, sum(base_price*`quantity_sold(before_promo)`) as `total_revenue(before_promo)`, 
-#### sum(
-#### case
-#### when promo_type='25% OFF' then base_price*(1-0.25)*`quantity_sold(after_promo)`
-#### when promo_type='33% OFF' then base_price*(1-0.33)*`quantity_sold(after_promo)`
-#### when promo_type='50% OFF' then base_price*(1-0.5)*`quantity_sold(after_promo)`
-#### when promo_type='BOGOF' then base_price*`quantity_sold(after_promo)`
-#### when promo_type='500 Cashback' then (base_price-500)*`quantity_sold(after_promo)`
-#### end) as `total_revenue(after_promo)`
+#### create table `isu%`
+#### select category,campaign_id, 
+#### (sum(`quantity_sold(after_promo)`)-sum(`quantity_sold(before_promo)`))*100/sum(`quantity_sold(before_promo)`) as `isu%`
 #### from fact_events
+#### join dim_products using (product_code)
 #### where campaign_id='CAMP_DIW_01'
-#### group by fact_events.product_code
-#### ;
+#### group by category;
 
-#### create table isu_table
-####  select campaign_id,product_code,
-#### ((`total_revenue(after_promo)`-`total_revenue(before_promo)`)/`total_revenue(after_promo)`)*100 as isu
-#### from new_table;
+#### select campaign_id,category,`isu%`,rank() over(order by `isu%` desc) as `rank_isu%`
+#### from `isu%`;
+![Screenshot 2024-05-17 210715](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/08a27201-7b50-4aa7-874c-c95e0d9aeff5)
 
-
-####  select campaign_id,product_code,isu, dense_rank()
-####  over (order by isu desc) as result from isu_table;
-![Screenshot 2024-05-16 210537](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/1dbc2398-f496-4cfc-96fa-0df413517899)
+ 
 #
 ### 5. Create a report featuring the top 5 products, ranked by Incremental Revenue Percentage(IR%),across all campaigns. The report will provide essential information including proudct name, category, and ir%. This analysis helps identify the most successful products in terms of incremental revenue across our campaigns, assisting in product optimization.
 #### Code:
