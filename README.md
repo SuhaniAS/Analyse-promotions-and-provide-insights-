@@ -63,4 +63,27 @@
 ####  over (order by isu desc) as result from isu_table;
 ![Screenshot 2024-05-16 210537](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/1dbc2398-f496-4cfc-96fa-0df413517899)
 #
-### 5. 
+### 5. Create a report featuring the top 5 products, ranked by Incremental Revenue Percentage(IR%),across all campaigns. The report will provide essential information including proudct name, category, and ir%. This analysis helps identify the most successful products in terms of incremental revenue across our campaigns, assisting in product optimization.
+#### Code:
+#### create table ir
+#### select fact_events.product_code,dim_products.product_name,dim_products.category,
+#### sum(fact_events.base_price*fact_events.`quantity_sold(before_promo)`) as ir_before_promo,
+#### sum(
+#### case
+#### when promo_type='25% OFF' then base_price*(1-0.25)*`quantity_sold(after_promo)`
+#### when promo_type='33% OFF' then base_price*(1-0.33)*`quantity_sold(after_promo)`
+#### when promo_type='50% OFF' then base_price*(1-0.5)*`quantity_sold(after_promo)`
+#### when promo_type='BOGOF' then base_price*`quantity_sold(after_promo)`
+#### when promo_type='500 Cashback' then (base_price-500)*`quantity_sold(after_promo)`
+#### end
+#### ) as ir_after_promo
+#### from retail_events_db.fact_events
+#### inner join dim_products 
+#### where fact_events.product_code=dim_products.product_code
+#### group by product_code;
+
+#### select*from ir;
+
+#### select product_name, category, (ir_after_promo-ir_before_promo)*100/ir_after_promo as `ir%`
+#### from ir;
+![Screenshot 2024-05-17 110048](https://github.com/SuhaniAS/Analyse-promotions-and-provide-insights-/assets/137792301/7144fe41-2553-4faf-af7a-60e6ac8f924d)
